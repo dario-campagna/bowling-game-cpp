@@ -7,7 +7,7 @@ void Game::roll(int pins) {
 int Game::score() {
     int score = 0;
     for (int i = 0; i < rolled.size(); i++){
-        if (isSpareFrame(i)) {
+        if (isSpareFrame(i) && i+2 < rolled.size()-1) {
             score += spare(i);
             i++;
         } else if (rolled[i] == 10 && i+2 < rolled.size()-1) {
