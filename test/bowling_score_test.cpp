@@ -43,3 +43,11 @@ TEST(BowlingScoreTest, OneSpareOneSixOneSpareOneEightAndAllZerosIsTwentytwo){
     roll(&game, 13, 0);
     ASSERT_EQ(game.score(), 48);
 }
+
+TEST(BowlingScoreTest, AllZerosSpareOnLastFrameAndThreeIsSixteen) {
+    Game game;
+    roll(&game, 18, 0);
+    spare(&game);
+    game.roll(3);
+    ASSERT_EQ(game.score(), 16);
+}
