@@ -60,3 +60,9 @@ TEST(BowlingScoreTest, OneStrikeOneTwoOneSevenAndAllZerosIsTwentyeight) {
     roll(&game, 16, 0);
     ASSERT_EQ(game.score(), 28);
 }
+
+TEST(BowlingScoreTest, AllStrikesIsThreehundred) {
+    Game game;
+    roll(&game, 12, 10);
+    ASSERT_EQ(game.score(), 300);
+}

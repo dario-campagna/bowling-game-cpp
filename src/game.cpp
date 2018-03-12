@@ -10,7 +10,7 @@ int Game::score() {
         if (isSpareFrame(i)) {
             score += spare(i);
             i++;
-        } else if (rolled[i] == 10) {
+        } else if (rolled[i] == 10 && i+2 < rolled.size()-1) {
             score += 10 + rolled[i+1] + rolled[i+2];
         } else {
             score += rolled[i];
