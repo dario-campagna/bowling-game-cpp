@@ -1,8 +1,10 @@
 #ifndef BOWLINGGAME_GAME_H
 #define BOWLINGGAME_GAME_H
 
+#include <vector>
+
 class Game {
-    int rolled = 0;
+    std::vector<int> rolled;
 public:
     void roll(int pins);
     int score();

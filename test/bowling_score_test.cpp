@@ -18,3 +18,25 @@ TEST(BowlingScoreTest, AllOnesIsTwenty) {
     roll(&game, 20, 1);
     ASSERT_EQ(game.score(), 20);
 }
+
+TEST(BowlingScoreTest, OneSpareOneSixAndAllZerosIsTwentytwo){
+    Game game;
+    game.roll(3);
+    game.roll(7);
+    game.roll(6);
+    roll(&game, 17, 0);
+    ASSERT_EQ(game.score(), 22);
+}
+
+TEST(BowlingScoreTest, OneSpareOneSixOneSpareOneEightAndAllZerosIsTwentytwo){
+    Game game;
+    game.roll(3);
+    game.roll(7);
+    game.roll(6);
+    game.roll(0);
+    game.roll(5);
+    game.roll(5);
+    game.roll(8);
+    roll(&game, 13, 0);
+    ASSERT_EQ(game.score(), 48);
+}
