@@ -2,6 +2,7 @@
 #define BOWLINGGAME_GAME_H
 
 class Game {
+    int rolled = 0;
 public:
     void roll(int pins);
     int score();
