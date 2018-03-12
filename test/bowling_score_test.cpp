@@ -7,6 +7,11 @@ void roll(Game* game, int times, int pins) {
     }
 }
 
+void spare(Game* game){
+    game->roll(5);
+    game->roll(5);
+}
+
 TEST(BowlingScoreTest, AllZerosIsZero) {
     Game game;
     roll(&game, 20, 0);
@@ -30,12 +35,10 @@ TEST(BowlingScoreTest, OneSpareOneSixAndAllZerosIsTwentytwo){
 
 TEST(BowlingScoreTest, OneSpareOneSixOneSpareOneEightAndAllZerosIsTwentytwo){
     Game game;
-    game.roll(3);
-    game.roll(7);
+    spare(&game);
     game.roll(6);
     game.roll(0);
-    game.roll(5);
-    game.roll(5);
+    spare(&game);
     game.roll(8);
     roll(&game, 13, 0);
     ASSERT_EQ(game.score(), 48);
