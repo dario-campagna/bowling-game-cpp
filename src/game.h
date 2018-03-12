@@ -8,6 +8,10 @@ class Game {
 public:
     void roll(int pins);
     int score();
+
+    bool isSpareFrame(int i) const;
+
+    int spare(int i) const;
 };
 
 #endif //BOWLINGGAME_GAME_H
