@@ -1,67 +1,70 @@
 #include "gtest/gtest.h"
 #include "../src/game.h"
 
-void rollMany(Game *game, int times, int pins) {
-    for(int i = 0; i < times; i++){
-        game->roll(pins);
+class GameTest: public testing::Test {
+protected:
+    Game game;
+
+    void rollMany(int rolls, int pins) {
+        for(int i = 0;i < rolls; i++){
+            game.roll(pins);
+        }
     }
+
+    void rollSpare() {
+        game.roll(5);
+        game.roll(5);
+    }
+
+    void rollStrike(){
+        game.roll(10);
+    }
+
+};
+
+TEST_F(GameTest, GutterGame) {
+    rollMany(20,0);
+    ASSERT_EQ(game.score(), 0);
 }
 
-void spare(Game* game){
-    game->roll(5);
-    game->roll(5);
-}
-
-TEST(BowlingScoreTest, GutterGame) {
-    Game game;
-    rollMany(&game, 20, 0);
-	ASSERT_EQ(game.score(), 0);
-}
-
-TEST(BowlingScoreTest, AllOnes) {
-    Game game;
-    rollMany(&game, 20, 1);
+TEST_F(GameTest, AllOnes) {
+    rollMany(20, 1);
     ASSERT_EQ(game.score(), 20);
 }
 
-TEST(BowlingScoreTest, OneSpare){
-    Game game;
-    spare(&game);
+TEST_F(GameTest, OneSpare){
+    rollSpare();
     game.roll(6);
-    rollMany(&game, 17, 0);
+    rollMany(17, 0);
     ASSERT_EQ(game.score(), 22);
 }
 
-TEST(BowlingScoreTest, TwoSpares){
-    Game game;
-    spare(&game);
+TEST_F(GameTest, TwoSpares){
+    rollSpare();
     game.roll(6);
     game.roll(0);
-    spare(&game);
+    rollSpare();
     game.roll(8);
-    rollMany(&game, 13, 0);
+    rollMany(13, 0);
     ASSERT_EQ(game.score(), 48);
 }
 
-TEST(BowlingScoreTest, SpareOnLastFrame) {
-    Game game;
-    rollMany(&game, 18, 0);
-    spare(&game);
+TEST_F(GameTest, SpareOnLastFrame) {
+    rollMany(18, 0);
+    rollSpare();
     game.roll(3);
     ASSERT_EQ(game.score(), 13);
 }
 
-TEST(BowlingScoreTest, OneStrike) {
-    Game game;
-    game.roll(10);
+TEST_F(GameTest, OneStrike) {
+    rollStrike();
     game.roll(2);
     game.roll(7);
-    rollMany(&game, 16, 0);
+    rollMany(16, 0);
     ASSERT_EQ(game.score(), 28);
 }
 
-TEST(BowlingScoreTest, PerfectGame) {
-    Game game;
-    rollMany(&game, 12, 10);
+TEST_F(GameTest, PerfectGame) {
+    rollMany(12, 10);
     ASSERT_EQ(game.score(), 300);
 }
