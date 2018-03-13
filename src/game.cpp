@@ -1,30 +1,35 @@
 #include "game.h"
 
 void Game::roll(int pins) {
-    rolled.push_back(pins);
+    rolls.push_back(pins);
 }
 
 int Game::score() {
     int score = 0;
-    for (int roll = 0; roll < rolled.size(); roll++){
-        if (isSpareFrame(roll) && !isLastFrame(roll)) {
-            score += 10 + spareBonus(roll);
-            roll++;
-        } else if (isStrikeFrame(roll) && !isLastFrame(roll)) {
-            score += 10 + strikeBonus(roll);
+    int frameIndex = 0;
+    for (int frame = 0; frame < 10; frame++){
+        if (isSpareFrame(frameIndex)) {
+            score += 10 + spareBonus(frameIndex);
+            frameIndex+=2;
+        } else if (isStrikeFrame(frameIndex)) {
+            score += 10 + strikeBonus(frameIndex);
+            frameIndex++;
         } else {
-            score += rolled[roll];
+            score += sumOfKnockedPinsInFrame(frameIndex);
+            frameIndex+=2;
         }
     }
     return score;
 }
 
-int Game::spareBonus(int roll) const { return rolled[roll + 2]; }
+int Game::spareBonus(int frameIndex) const { return rolls[frameIndex + 2]; }
 
-int Game::strikeBonus(int roll) const { return rolled[roll+1] + rolled[roll + 2]; }
+int Game::strikeBonus(int frameIndex) const { return rolls[frameIndex+1] + rolls[frameIndex + 2]; }
 
-bool Game::isStrikeFrame(int roll) const { return rolled[roll] == 10; }
+int Game::sumOfKnockedPinsInFrame(int frameIndex) {
+    return rolls[frameIndex] + rolls[frameIndex+1];
+}
 
-bool Game::isLastFrame(int roll) const { return roll + 2 >= rolled.size() - 1; }
+bool Game::isStrikeFrame(int frameIndex) const { return rolls[frameIndex] == 10; }
 
-bool Game::isSpareFrame(int roll) const { return rolled[roll] + rolled[roll + 1] == 10; }
+bool Game::isSpareFrame(int frameIndex) const { return rolls[frameIndex] + rolls[frameIndex + 1] == 10; }

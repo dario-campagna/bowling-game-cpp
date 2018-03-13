@@ -4,12 +4,12 @@
 #include <vector>
 
 class Game {
-    std::vector<int> rolled;
-    bool isSpareFrame(int roll) const;
-    bool isStrikeFrame(int roll) const;
-    bool isLastFrame(int roll) const;
-    int spareBonus(int roll) const;
-    int strikeBonus(int roll) const;
+    std::vector<int> rolls;
+    bool isSpareFrame(int frameIndex) const;
+    bool isStrikeFrame(int frameIndex) const;
+    int spareBonus(int frameIndex) const;
+    int strikeBonus(int frameIndex) const;
+    int sumOfKnockedPinsInFrame(int frameIndex);
 
 public:
 
